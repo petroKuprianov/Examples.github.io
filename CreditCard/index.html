@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="./src/change.js"></script>
+    <script src="./src/index.js"></script>
+    <!-- <script src="./src/onButton.js"></script> -->
+
+<script>
+    $(function () {
+            var grayThemeCreditly = creditly.initialize(
+                '.section.gray_theme .expiration-month-and-year',
+                '.section.gray_theme .section__form-input-card',
+                '.section.gray_theme .security-code',
+                '.section.gray_theme .section__form-input-card');
+                var disableButton = function () {
+                    var testBut = document.getElementById("button_disable");
+                    testBut.setAttribute('disabled', true);
+                    var loader = document.getElementById("circleLoad");
+                    var form = document.getElementById("formOpacity");
+                    form.style.opacity = 0.1;
+                    loader.style.display = "block";
+                }
+                var unableButton = function(){
+                    var testBut = document.getElementById("button_disable");
+                    testBut.removeAttribute("disabled");
+                    var loader = document.getElementById("circleLoad");
+                    var form = document.getElementById("formOpacity");
+                    form.style.opacity = 1;
+                    loader.style.display = "none";
+                }
+
+            $(".section__form-bottom-button").click(function (e) {
+                e.preventDefault();
+
+                disableButton();
+                setTimeout(unableButton,2000);
+
+                var output = grayThemeCreditly.validate();
+                if (output) {
+                    alert("Validated");
+                    console.log(output);
+                }
+            });
+
+        });
+</script>
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <a href="./index.html"> <img src="./img/CREDITON.png" alt="Logo" class="header__logo-picture"></a>
+        </div>
+        <div class="header__link">
+            <a href="#" class="header__link-lang header__link-1">РУ</a>
+            <a href="#" class="header__link-lang header__link-2">УКР</a>
+        </div>
+    </header>
+    <section class="section gray_theme">
+        <h1 class="section__header">Добавление платежной карты</h3>
+            <div class="section__form">
+                <form action="#" method="POST" id="formOpacity">
+                    <div class="section__form-text"><span>Номер карты</span></div>
+                    <div><input class="number section__form-input-card form-control" id="section__form-input-card"
+                            type="text" name="number" pattern="(\d*\s){3}\d*" inputmode="numeric"
+                            autocomplete="cc-number" autocompletetype="cc-number" x-autocompletetype="cc-number"
+                            placeholder="&#149;&#149;&#149;&#149; &#149;&#149;&#149;&#149; &#149;&#149;&#149;&#149; &#149;&#149;&#149;&#149;">
+                    </div>
+                    <div><span class="section__form-chek" id="section__form-chek-1">* Поле обязательно для ввода</span>
+                    </div>
+                    <input class="section__form-input-date form-control expiration-month-and-year" type="text"
+                        name="expiration-month-and-year" placeholder="MM / YY">
+                    <input class="section__form-input-cv security-code form-control" inputmode="numeric" pattern="\d*"
+                        type="password" name="security-code" placeholder="***">
+                    <div>
+                        <span class="section__form-chek" id="section__form-chek-2">* Поле обязательно для ввода</span>
+                        <span class="section__form-chek" id="section__form-chek-3">* Поле обязательно для ввода</span>
+                    </div>
+                    <div class="section__form-card-type"></div>
+                    <div class="section__form-bottom-text">
+                        <span>Для привязки карты мы проведем платеж в
+                            размере 1.00 UAH, который будет возвращен в течение 30 минут
+                        </span>
+                    </div>
+                    <button class="section__form-bottom-button" id="button_disable">Получить
+                        деньги</button>
+                    </form>
+                    <div class="section__form-lds_circle" id="circleLoad"></div>
+                </div>
+            </section>
+    <!-- <script src="./dist/main.js"></script> -->
+    
+</body>
+
+</html>
